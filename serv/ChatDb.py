@@ -1,5 +1,6 @@
 import sqlite3
 import json
+from os.path import join, abspath, dirname
 
 
 class ChatDbError(Exception):
@@ -9,8 +10,8 @@ class ChatDbError(Exception):
 class ChatDb:
 
     def __init__(self):
-        self._db_file = 'chat.db'
-        self._tables_creation_file = 'tables_creation_commands'
+        self._db_file = join(dirname(abspath(__file__)), 'chat.db')
+        self._tables_creation_file = join(dirname(abspath(__file__)), 'tables_creation_commands')
         self._db_commands = self._get_commands_from_file()
         self._connection = self._create_connection()
         self._create_tables()
