@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python3.7 Server.py
+    volumes:
+      - ./serv
+    ports:
+      - "9000:9000"

@@ -1,0 +1,51 @@
+{
+"create table user":
+    "CREATE TABLE IF NOT EXISTS user ( id integer PRIMARY KEY AUTOINCREMENT, username text NOT NULL UNIQUE, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);",
+
+"create table chat":
+    "CREATE TABLE IF NOT EXISTS chat (id integer PRIMARY KEY AUTOINCREMENT, name text NOT NULL UNIQUE, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL);",
+
+"create table user_in_chat":
+    "CREATE TABLE IF NOT EXISTS user_in_chat (user integer not null, chat integer not null, FOREIGN KEY (user) REFERENCES user(id), FOREIGN KEY (chat) REFERENCES chat(id), unique(user, chat));",
+
+"create table message":
+    "CREATE TABLE IF NOT EXISTS message (id integer PRIMARY KEY AUTOINCREMENT, text text NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL, author integer not null, chat integer not null, FOREIGN KEY (author) REFERENCES user(id), FOREIGN KEY (chat) REFERENCES chat(id));",
+
+"user insert":
+    "INSERT INTO user (username) VALUES ('{}');",
+
+"user select":
+    "SELECT id from user where '{}'=username",
+
+"chat insert":
+    "INSERT INTO chat (name) VALUES ('{}');",
+
+"chat select":
+    "SELECT id from chat where '{}'=name",
+
+"user in chat insert":
+    "INSERT INTO user_in_chat (user, chat) VALUES ('{}', '{}');",
+
+"user by id select":
+    "SELECT * from user where '{}'=id",
+
+"message insert":
+    "INSERT INTO message (chat, author, text) VALUES ('{}', '{}', '{}');",
+
+"message select":
+    "SELECT max(id) as message_id from message where '{}'=chat and '{}'=author and '{}'=text",
+
+"chat by id select":
+    "SELECT * from chat where '{}'=id",
+
+"user in chat select":
+    "SELECT * from user_in_chat where '{}'=chat and '{}'=user",
+
+"user in chat by user id select":
+    "SELECT chat.id, chat.name, chat.created_at from user_in_chat, chat where chat.id=chat and '{}'=user ORDER BY chat.created_at DESC;",
+
+"message by chat id select":
+    "SELECT * from message where '{}'=chat ORDER BY created_at DESC;"
+
+
+}
